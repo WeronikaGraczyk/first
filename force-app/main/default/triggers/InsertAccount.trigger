@@ -1,3 +1,3 @@
-trigger InsertAccount on Accouunt (before insert) {
-    new InsertAccountHandler.run(Trigger.new);
+trigger InsertAccount on Account (before insert) {
+    new InsertAccountHandler().run();
 }
