@@ -12,9 +12,8 @@ public with sharing class CheckGenederContact {
         if( a.equals('na') || a.equals('ta') || a.equals('ia') || a.equals('wa') ||
             a.equals('ja') || a.equals('la') || a.equals('da') || a.equals('ła') ||
             a.equals('ra') || a.equals('ża') || a.equals('sa') || a.equals('ga') || 
-            a.equals('za')){
+            a.equals('za') || a.equals('ka')){
                 return 'Female';
-                System.debug('debug '+firstName);
             }
         return 'Male';
     }
