@@ -4,7 +4,6 @@ public with sharing class CheckGenederContact {
         for(Contact c:contact){
             c.Gender__c=whichGender(c.FirstName);
             retur.add(c);
-            System.debug(c.Gender__c);
         } 
     }
     private static String whichGender(String firstname){
