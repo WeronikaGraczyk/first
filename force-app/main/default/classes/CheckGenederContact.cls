@@ -14,6 +14,7 @@ public with sharing class CheckGenederContact {
             a.equals('ra') || a.equals('ża') || a.equals('sa') || a.equals('ga') || 
             a.equals('za')){
                 return 'Female';
+                System.debug('debug '+firstName);
             }
         return 'Male';
     }
