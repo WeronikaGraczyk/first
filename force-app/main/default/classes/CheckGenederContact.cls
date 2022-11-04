@@ -1,9 +1,11 @@
 public with sharing class CheckGenederContact {
     public static void checkGender(List<Contact> contact){
+        List<Contact> retur = new List<Contact>();
         for(Contact c:contact){
             c.Gender__c=whichGender(c.FirstName);
-            update c;
-        }
+            retur.add(c);
+            System.debug(c.Gender__c);
+        } 
     }
     private static String whichGender(String firstname){
         String a = firstname.right(2);
