@@ -1,9 +1,16 @@
 public with sharing class ContactTriggerHandler extends TriggerHandler{
-    List<Contact> contact=Trigger.new;
+    
     public override void beforeInsert(){
-        CheckGenederContact.checkGender(contact);
+        List<Contact> contacts=Trigger.new;
+        CheckGenederContact.checkGender(contacts);
     }
     public override void beforeUpdate(){
-        CheckGenederContact.checkGender(contact);
+        List<Contact> contacts=Trigger.new;
+        CheckGenederContact.checkGender(contacts);
+    }
+    public override void afterUpdate(){
+        List<Contact> newContacts = Trigger.new;
+        List<Contact> oldContacts = Trigger.old;
+        ChangeAccountBudgets.changeBudget(newContacts, oldContacts);
     }
 }
