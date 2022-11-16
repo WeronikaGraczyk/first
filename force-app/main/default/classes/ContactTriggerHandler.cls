@@ -11,7 +11,6 @@ public with sharing class ContactTriggerHandler extends TriggerHandler{
     public override void afterUpdate(){
         List<Contact> newContacts = Trigger.new;
         List<Contact> oldContacts = Trigger.old;
-        System.debug(newContacts);
-        ChangeAccountBudgets.isBudgetUpdate(newContacts, oldContacts);
+        ChangeAccountWallet.isBudgetUpdate(newContacts, oldContacts);
     }
 }
