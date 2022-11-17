@@ -27,5 +27,5 @@ public without sharing class ChangeContactWalletValue {
         }
         update contactsToUpdate;
     }
-    
+
 }
