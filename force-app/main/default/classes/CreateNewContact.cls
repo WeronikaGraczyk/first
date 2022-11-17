@@ -1,21 +1,33 @@
 public with sharing class CreateNewContact {
 
     public static void createContact(List<Account> newAccounts){
-        List<Contact> contactList=new List<Contact>();
+        List<Contact> contactList = new List<Contact>();
 
-        for(Account a:newAccounts){
+        for(Account a : newAccounts){
             contactList.add(new Contact(FirstName='foo', LastName='bar', AccountId=a.id, Gender__c=checkGender('weronika')));
         }
         insert contactList;
     }
     public static String checkGender(String firstname){
-        String a=firstname.right(2);
-        if( a.equals('ka') || a.equals('na') || a.equals('ta') || a.equals('ia') || 
-            a.equals('wa') || a.equals('ja') || a.equals('la') || a.equals('da') || 
-            a.equals('ła') || a.equals('ra') || a.equals('ża') || a.equals('sa') || 
-            a.equals('ga') || a.equals('za')){
+        String a = firstname.right(2);
+        List<String> endNameTemplates = new List<String>();
+        endNameTemplates.add('na');
+        endNameTemplates.add('ta');
+        endNameTemplates.add('ia');
+        endNameTemplates.add('wa');
+        endNameTemplates.add('ja');
+        endNameTemplates.add('la');
+        endNameTemplates.add('da');
+        endNameTemplates.add('ła');
+        endNameTemplates.add('ra');
+        endNameTemplates.add('ża');
+        endNameTemplates.add('sa');
+        endNameTemplates.add('ga');
+        endNameTemplates.add('za');
+        endNameTemplates.add('ka');
+        if(endNameTemplates.equals(endNameTemplates) ){
                 return 'Female';
             }
-            return 'Male';
-        }
+        return 'Male';
+    }
 }

@@ -7,15 +7,16 @@ public with sharing class CheckGenederContact_Test {
         String lastname = 'bar';
         String gender = 'Male';
         //when
-        Account a=new Account(name='ValidName');
-        insert a;
-        Contact c = [SELECT firstName, lastName, Gender__c FROM Contact WHERE AccountId =:a.id];
+        Account account=new Account(name='ValidName');
+        insert account;
+        Contact contact = [SELECT firstName, lastName, Gender__c FROM Contact WHERE AccountId =:account.id];
+
         //then
-        
-        System.assertEquals(firstName,c.firstName);
-        System.assertEquals(lastName,c.lastName);
-        System.assertEquals(gender,c.Gender__c);
+        System.assertEquals(firstName, contact.firstName);
+        System.assertEquals(lastName, contact.lastName);
+        System.assertEquals(gender, contact.Gender__c);
     }
+
     @isTest
     static void checkGenderWhenIsFemaleAfterUpdate(){
         
@@ -25,58 +26,54 @@ public with sharing class CheckGenederContact_Test {
         String gender = 'Female';
 
         //when
-
-        Account a=new Account(name='ValidName');
-        insert a;
-        Contact c = [SELECT firstName, lastName, Gender__c FROM Contact WHERE AccountId =:a.id];
-        c.firstName = 'Weronika';
-        update c;
-        Contact c1 = [SELECT firstName, lastName, Gender__c FROM Contact WHERE AccountId =:a.id];
+        Account account = new Account(name='ValidName');
+        insert account;
+        Contact contact = [SELECT firstName, lastName, Gender__c FROM Contact WHERE AccountId =:account.id];
+        contact.firstName = 'Weronika';
+        update contact;
+        Contact contactAfterUpdate = [SELECT firstName, lastName, Gender__c FROM Contact WHERE AccountId =:account.id];
 
         //then
-        
-        System.assertEquals('Weronika',c1.firstName);
-        System.assertEquals(lastName,c1.lastName);
-        System.assertEquals(gender,c1.Gender__c);
+        System.assertEquals('Weronika', contactAfterUpdate.firstName);
+        System.assertEquals(lastName, contactAfterUpdate.lastName);
+        System.assertEquals(gender, contactAfterUpdate.Gender__c);
     }
+
     @isTest
     static void checkGenderWhenInsertContactIsMale(){
         
         //given
         String firstnameValid = 'foo';
         String lastnameValid = 'bar';
-        String gender='Male';
+        String gender = 'Male';
 
         //when
-        Contact c=new Contact(firstName=firstnameValid, lastName=lastnameValid);
-        insert c;
-        System.debug(c.id);
-        Contact c1=[SELECT firstName,lastName,Gender__c FROM Contact WHERE id=:c.id];
+        Contact contact=new Contact(firstName=firstnameValid, lastName=lastnameValid);
+        insert contact;
+        Contact contactAfterInsert = [SELECT firstName,lastName,Gender__c FROM Contact WHERE id=:contact.id];
 
         //then
-        
-        System.assertEquals(firstnameValid,c1.firstName);
-        System.assertEquals(lastnameValid,c1.lastName);
-        System.assertEquals(gender,c1.Gender__c);
+        System.assertEquals(firstnameValid,contactAfterInsert.firstName);
+        System.assertEquals(lastnameValid,contactAfterInsert.lastName);
+        System.assertEquals(gender,contactAfterInsert.Gender__c);
     }
+
     @isTest
     static void checkGenderWhenInsertContactIsFemale(){
         
         //given
         String firstnameValid = 'Weronika';
         String lastnameValid = 'bar';
-        String gender='Female';
+        String gender = 'Female';
 
         //when
-        Contact c=new Contact(firstName=firstnameValid, lastName=lastnameValid);
-        insert c;
-        System.debug(c.id);
-        Contact c1=[SELECT firstName,lastName,Gender__c FROM Contact WHERE id=:c.id];
+        Contact contact = new Contact(firstName=firstnameValid, lastName=lastnameValid);
+        insert contact;
+        Contact contactAfterInsert = [SELECT firstName,lastName,Gender__c FROM Contact WHERE id=:contact.id];
 
         //then
-        
-        System.assertEquals(firstnameValid,c1.firstName);
-        System.assertEquals(lastnameValid,c1.lastName);
-        System.assertEquals(gender,c1.Gender__c);
+        System.assertEquals(firstnameValid, contactAfterInsert.firstName);
+        System.assertEquals(lastnameValid, contactAfterInsert.lastName);
+        System.assertEquals(gender, contactAfterInsert.Gender__c);
     }
 }

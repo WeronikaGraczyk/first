@@ -6,13 +6,15 @@ public with sharing class CreateNewContact_Test {
         //given
         String firstname = 'foo';
         String lastname = 'bar';
+
         //when
-        Account a=new Account(name='ValidName');
-        insert a;
+        Account account = new Account( name = 'ValidName');
+        insert account;
+
         //then
-        System.assertEquals(a,[SELECT name FROM Account WHERE id=:a.id]);
-        Contact c = [SELECT firstName, lastName FROM Contact WHERE AccountId =:a.id];
-        System.assertEquals(firstName,c.firstName);
-        System.assertEquals(lastName,c.lastName);
+        System.assertEquals(account, [SELECT name FROM Account WHERE id=:account.id]);
+        Contact contact = [SELECT firstName, lastName FROM Contact WHERE AccountId =:account.id];
+        System.assertEquals(firstName, contact.firstName);
+        System.assertEquals(lastName, contact.lastName);
     }
 }
