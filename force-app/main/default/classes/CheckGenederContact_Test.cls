@@ -6,8 +6,9 @@ public with sharing class CheckGenederContact_Test {
         String firstname = 'foo';
         String lastname = 'bar';
         String gender = 'Male';
+
         //when
-        Account account=new Account(name='ValidName');
+        Account account = new Account(name = 'ValidName', Budget__c = 0);
         insert account;
         Contact contact = [SELECT firstName, lastName, Gender__c FROM Contact WHERE AccountId =:account.id];
 
@@ -26,7 +27,7 @@ public with sharing class CheckGenederContact_Test {
         String gender = 'Female';
 
         //when
-        Account account = new Account(name='ValidName');
+        Account account = new Account(name = 'ValidName', Budget__c = 10);
         insert account;
         Contact contact = [SELECT firstName, lastName, Gender__c FROM Contact WHERE AccountId =:account.id];
         contact.firstName = 'Weronika';
@@ -48,9 +49,9 @@ public with sharing class CheckGenederContact_Test {
         String gender = 'Male';
 
         //when
-        Contact contact=new Contact(firstName=firstnameValid, lastName=lastnameValid);
+        Contact contact = new Contact(firstName = firstnameValid, lastName = lastnameValid);
         insert contact;
-        Contact contactAfterInsert = [SELECT firstName,lastName,Gender__c FROM Contact WHERE id=:contact.id];
+        Contact contactAfterInsert = [SELECT firstName, lastName, Gender__c FROM Contact WHERE id=:contact.id];
 
         //then
         System.assertEquals(firstnameValid,contactAfterInsert.firstName);
@@ -67,9 +68,9 @@ public with sharing class CheckGenederContact_Test {
         String gender = 'Female';
 
         //when
-        Contact contact = new Contact(firstName=firstnameValid, lastName=lastnameValid);
+        Contact contact = new Contact(firstName = firstnameValid, lastName = lastnameValid);
         insert contact;
-        Contact contactAfterInsert = [SELECT firstName,lastName,Gender__c FROM Contact WHERE id=:contact.id];
+        Contact contactAfterInsert = [SELECT firstName, lastName, Gender__c FROM Contact WHERE id=:contact.id];
 
         //then
         System.assertEquals(firstnameValid, contactAfterInsert.firstName);

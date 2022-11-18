@@ -9,7 +9,7 @@ public with sharing class CreateNewContact {
         insert contactList;
     }
     public static String checkGender(String firstname){
-        String a = firstname.right(2);
+        String endName = firstname.right(2);
         List<String> endNameTemplates = new List<String>();
         endNameTemplates.add('na');
         endNameTemplates.add('ta');
@@ -25,9 +25,10 @@ public with sharing class CreateNewContact {
         endNameTemplates.add('ga');
         endNameTemplates.add('za');
         endNameTemplates.add('ka');
-        if(endNameTemplates.equals(endNameTemplates) ){
+        System.debug(endName);
+        if(endNameTemplates.contains(endName)){
                 return 'Female';
-            }
+        }
         return 'Male';
     }
 }

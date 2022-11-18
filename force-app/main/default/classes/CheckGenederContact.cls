@@ -2,12 +2,12 @@ public with sharing class CheckGenederContact {
     public static void checkGender(List<Contact> contacts){
         List<Contact> contactsToCheckGender = new List<Contact>();
         for(Contact contact : contacts){
-            contact.Gender__c=whichGender(contact.FirstName);
+            contact.Gender__c = whichGender(contact.FirstName);
             contactsToCheckGender.add(contact);
         } 
     }
     private static String whichGender(String firstname){
-        String a = firstname.right(2);
+        String endName = firstname.right(2);
         List<String> endNameTemplates = new List<String>();
         endNameTemplates.add('na');
         endNameTemplates.add('ta');
@@ -23,7 +23,7 @@ public with sharing class CheckGenederContact {
         endNameTemplates.add('ga');
         endNameTemplates.add('za');
         endNameTemplates.add('ka');
-        if(endNameTemplates.equals(endNameTemplates) ){
+        if(endNameTemplates.contains(endName) ){
                 return 'Female';
             }
         return 'Male';
