@@ -11,8 +11,8 @@ public with sharing class ContactTriggerHandler extends TriggerHandler{
     }
 
     public override void afterUpdate(){
-        List<Contact> newContacts = Trigger.new;
-        List<Contact> oldContacts = Trigger.old;
+        Map<Id, Contact> newContacts = (Map<Id, Contact>) Trigger.newMap;
+        Map<Id, Contact> oldContacts = (Map<Id, Contact>) Trigger.oldMap;
         ChangeAccountWallet.updateAccountWallet(newContacts, oldContacts);
     }
 }

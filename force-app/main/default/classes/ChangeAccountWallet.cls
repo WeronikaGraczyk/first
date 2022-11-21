@@ -1,6 +1,6 @@
 public without sharing class ChangeAccountWallet {
     
-    public static void updateAccountWallet(List<Contact> newContacts, List<Contact> oldContacts){
+    public static void updateAccountWallet(Map<Id, Contact> newContacts, Map<Id, Contact> oldContacts){
         Map<Contact, Double> contactsAfterWalletUpdate = filterContactAfterWalletUpdate(newContacts, oldContacts);
         Set<id> accountIds =getIdAccountFromContact(newContacts);
         List<Account> accountsFromContacts = new List<Account>([SELECT id, Account_Wallet__c FROM Account WHERE id IN :accountIds]);
@@ -17,21 +17,19 @@ public without sharing class ChangeAccountWallet {
         update accountsToUpdate;
     }
 
-    private static Map<Contact, Double> filterContactAfterWalletUpdate(List<Contact> newContacts, List<Contact> oldContacts){
+    private static Map<Contact, Double> filterContactAfterWalletUpdate(Map<Id, Contact> newContacts, Map<Id, Contact> oldContacts){
         Map<Contact, Double> contactsAfterWalletUpdate = new Map<Contact, double>();
-        for(Contact newContact : newContacts){
-            for(Contact oldContact : oldContacts){
-                if(oldContact.id == newContact.id && oldContact.Contact_Wallet__c != newContact.Contact_Wallet__c){
-                    contactsAfterWalletUpdate.put(newContact, newContact.Contact_Wallet__c - oldContact.Contact_Wallet__c);
-                }
-            }   
+        for(Contact newContact: newContacts.values()) {
+            if(oldContacts.get(newContact.Id).Contact_Wallet__c != newContact.Contact_Wallet__c ) {
+            contactsAfterWalletUpdate.put(newContact, newContact.Contact_Wallet__c - oldContacts.get(newContact.Id).Contact_Wallet__c);
+            }
         }
         return contactsAfterWalletUpdate;
     }
 
-    private static Set<id> getIdAccountFromContact(List<Contact> contacts){
+    private static Set<id> getIdAccountFromContact(Map<Id, Contact> contacts){
         Set<id> accountIds = new Set<id>();
-        for(Contact contact : contacts) {
+        for(Contact contact : contacts.values()) {
             accountIds.add(contact.AccountId);
         }
         return accountIds;
