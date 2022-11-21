@@ -1,30 +1,23 @@
 public without sharing class ChangeAccountWallet {
-    
+
     public static void updateAccountWallet(Map<Id, Contact> newContacts, Map<Id, Contact> oldContacts){
-        Map<Contact, Double> contactsAfterWalletUpdate = filterContactAfterWalletUpdate(newContacts, oldContacts);
-        Set<id> accountIds =getIdAccountFromContact(newContacts);
-        List<Account> accountsFromContacts = new List<Account>([SELECT id, Account_Wallet__c FROM Account WHERE id IN :accountIds]);
+        Set<id> accountIds = getIdAccountFromContact(newContacts);
+        List<Account> accountsWithContacts = [SELECT Id, Account_Wallet__c, (SELECT Id, Contact_Wallet__c FROM Contacts) FROM Account WHERE Id IN :accountIds];
         List<Account> accountsToUpdate = new List<Account>();
 
-        for(Account account : accountsFromContacts){
-            for(Contact contact : contactsAfterWalletUpdate.keySet()){
-                if(account.id == contact.AccountId){
-                    account.Account_Wallet__c = account.Account_Wallet__c + contactsAfterWalletUpdate.get(contact);
-                    accountsToUpdate.add(account);
-                }
+        for(Account accountTemp : accountsWithContacts) {
+            Double newAccountWallet = 0;
+            for(Contact contactTemp : accountTemp.Contacts) {
+                newAccountWallet += contactTemp.Contact_Wallet__c ;
+            }
+            if(newAccountWallet != accountTemp.Account_Wallet__c) {
+                accountTemp.Account_Wallet__c = newAccountWallet;
+                accountsToUpdate.add(accountTemp);
             }
         }
-        update accountsToUpdate;
-    }
-
-    private static Map<Contact, Double> filterContactAfterWalletUpdate(Map<Id, Contact> newContacts, Map<Id, Contact> oldContacts){
-        Map<Contact, Double> contactsAfterWalletUpdate = new Map<Contact, double>();
-        for(Contact newContact: newContacts.values()) {
-            if(oldContacts.get(newContact.Id).Contact_Wallet__c != newContact.Contact_Wallet__c ) {
-            contactsAfterWalletUpdate.put(newContact, newContact.Contact_Wallet__c - oldContacts.get(newContact.Id).Contact_Wallet__c);
-            }
+        if(!accountsToUpdate.isEmpty()) {
+            update accountsToUpdate;
         }
-        return contactsAfterWalletUpdate;
     }
 
     private static Set<id> getIdAccountFromContact(Map<Id, Contact> contacts){
