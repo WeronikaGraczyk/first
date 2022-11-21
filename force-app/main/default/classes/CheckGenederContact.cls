@@ -6,26 +6,12 @@ public with sharing class CheckGenederContact {
             contactsToCheckGender.add(contact);
         } 
     }
-    private static String whichGender(String firstname){
+    public static String whichGender(String firstname){
         String endName = firstname.right(2);
-        List<String> endNameTemplates = new List<String>();
-        endNameTemplates.add('na');
-        endNameTemplates.add('ta');
-        endNameTemplates.add('ia');
-        endNameTemplates.add('wa');
-        endNameTemplates.add('ja');
-        endNameTemplates.add('la');
-        endNameTemplates.add('da');
-        endNameTemplates.add('ła');
-        endNameTemplates.add('ra');
-        endNameTemplates.add('ża');
-        endNameTemplates.add('sa');
-        endNameTemplates.add('ga');
-        endNameTemplates.add('za');
-        endNameTemplates.add('ka');
+        Set<String> endNameTemplates = new Set<String>{'na','ta','ia','wa','ja','la','da','ła','ra','ża','sa','ga','za','ka'};
         if(endNameTemplates.contains(endName) ){
                 return 'Female';
-            }
+        }
         return 'Male';
     }
 }
