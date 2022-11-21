@@ -1,7 +1,8 @@
 public without sharing class ChangeAccountWallet {
 
     public static void updateAccountWallet(Map<Id, Contact> newContacts, Map<Id, Contact> oldContacts){
-        Set<id> accountIds = getIdAccountFromContact(newContacts);
+
+        Set<id> accountIds = filterAccountIdWhereWalletWasChangedOnContact(newContacts, oldContacts);
         List<Account> accountsWithContacts = [SELECT Id, Account_Wallet__c, (SELECT Id, Contact_Wallet__c FROM Contacts) FROM Account WHERE Id IN :accountIds];
         List<Account> accountsToUpdate = new List<Account>();
 
@@ -20,12 +21,13 @@ public without sharing class ChangeAccountWallet {
         }
     }
 
-    private static Set<id> getIdAccountFromContact(Map<Id, Contact> contacts){
-        Set<id> accountIds = new Set<id>();
-        for(Contact contact : contacts.values()) {
-            accountIds.add(contact.AccountId);
+    private static Set<id> filterAccountIdWhereWalletWasChangedOnContact(Map<Id, Contact> newContacts, Map<Id, Contact> oldContacts) {
+        Set<Id> accountsIds = new Set<Id>();
+         for(Contact newContact : newContacts.values()) {
+            if(oldContacts.get(newContact.Id).Contact_Wallet__c  != newContact.Contact_Wallet__c ) {
+                accountsIds.add(newContact.AccountId);
+            }
         }
-        return accountIds;
-
+        return accountsIds;
     }
 }

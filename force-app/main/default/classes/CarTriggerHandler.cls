@@ -6,7 +6,7 @@ public without sharing class CarTriggerHandler extends TriggerHandler{
     }
 
     public override void afterInsert(){
-        Map<id, Car__c> newCarsMap = (Map<id, Car__c>) Trigger.newMap;z
+        Map<id, Car__c> newCarsMap = (Map<id, Car__c>) Trigger.newMap;
         ChangeContactWalletValue.changeWalletValue(newCarsMap);
     }
 

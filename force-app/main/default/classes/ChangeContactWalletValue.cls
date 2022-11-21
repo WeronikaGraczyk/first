@@ -1,6 +1,6 @@
 public without sharing class ChangeContactWalletValue {
 
-    public static void changeWalletValue(Map<id, Car__c> newCarszzz){
+    public static void changeWalletValue(Map<id, Car__c> newCars){
 
         List<Contact> contactsToUpdate = new List<Contact>();
         Set<id> contactIds = getContactIdFromCar(newCars);
