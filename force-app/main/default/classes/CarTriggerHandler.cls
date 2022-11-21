@@ -1,13 +1,13 @@
 public without sharing class CarTriggerHandler extends TriggerHandler{
     
     public override void beforeDelete(){
-        List<Car__c> newCars = Trigger.old;
-        ChangeContactWalletValue.increaseWallet(newCars);
+        Map<id, Car__c> newCarsMap = (Map<id, Car__c>) Trigger.oldMap;
+        ChangeContactWalletValue.increaseWallet(newCarsMap);
     }
 
     public override void afterInsert(){
-        List<Car__c> newCars = Trigger.new;
-        ChangeContactWalletValue.reductionWallet(newCars);
+        Map<id, Car__c> newCarsMap = (Map<id, Car__c>) Trigger.newMap;
+        ChangeContactWalletValue.reductionWallet(newCarsMap);
     }
 
 }
