@@ -4,13 +4,15 @@ public with sharing class ContactTriggerHandler extends TriggerHandler{
         List<Contact> contacts = Trigger.new;
         CheckGenederContact.checkGender(contacts);
     }
+
     public override void beforeUpdate(){
         List<Contact> contacts = Trigger.new;
         CheckGenederContact.checkGender(contacts);
     }
+
     public override void afterUpdate(){
         List<Contact> newContacts = Trigger.new;
         List<Contact> oldContacts = Trigger.old;
-        ChangeAccountWallet.isWalletUpdate(newContacts, oldContacts);
+        ChangeAccountWallet.updateAccountWallet(newContacts, oldContacts);
     }
 }

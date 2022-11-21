@@ -32,7 +32,7 @@ public without sharing class ChangeContactWalletValue {
         }
         update contactsToUpdate;
     }
-    private static Set<Id> getContactIdFromCar(Map<id,Car__c> CarsMap){
+    private static Set<Id> getContactIdFromCar(Map<id, Car__c> newCars){
         Set<id> contactIds = new Set<id>();
         for(Car__c car: newCars.values()) {
             contactIds.add(car.Contacts__c);
