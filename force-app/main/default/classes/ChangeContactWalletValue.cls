@@ -1,37 +1,29 @@
 public without sharing class ChangeContactWalletValue {
 
-    public static void increaseWallet(Map<id, Car__c> newCars){
+    public static void changeWalletValue(Map<id, Car__c> newCarszzz){
 
         List<Contact> contactsToUpdate = new List<Contact>();
         Set<id> contactIds = getContactIdFromCar(newCars);
-        List<Contact> contactFromCarId = [SELECT  id, Contact_Wallet__c FROM Contact WHERE id IN (SELECT Contacts__c FROM Car__c WHERE Contacts__c IN :contactIds)];
+        List<Contact> contactsWithCars = [SELECT Id, Contact_Wallet__c, Contact_budget__c, (SELECT Id, Value__c FROM Cars__r) FROM Contact WHERE Id IN: contactIds];
+        
+        for(Contact contactTemp : contactsWithCars) {
+            Double newContactWallet = 0;
+            for(Car__c carTemp : contactTemp.Cars__r){
+                newContactWallet += carTemp.Value__c;
+            }
+            newContactWallet = contactTemp.Contact_budget__c - newContactWallet;
 
-        for( Contact contact : contactFromCarId) {
-            for( Car__c car : newCars.values()) {
-                if(( contact.id).equals(car.Contacts__c)){
-                    contact.Contact_Wallet__c += car.value__c;
-                    contactsToUpdate.add(contact);
-                }
+            if(contactTemp.Contact_Wallet__c != newContactWallet){
+
+                contactTemp.Contact_Wallet__c = newContactWallet;
+                contactsToUpdate.add(contactTemp);
             }
         }
-        update contactsToUpdate;
-    }
-
-    public static void reductionWallet(Map<id, Car__c> newCars){
-        List<Contact> contactsToUpdate = new List<Contact>();
-        Set<id> contactIds = getContactIdFromCar(newCars);
-        List<Contact> contactFromCarId = [SELECT  id, Contact_Wallet__c FROM Contact WHERE id IN (SELECT Contacts__c FROM Car__c WHERE Contacts__c IN :contactIds)];
-
-        for( Contact contact : contactFromCarId) {
-            for( Car__c car : newCars.values()) {
-                if(( contact.id).equals(car.Contacts__c)){
-                    contact.Contact_Wallet__c -= car.value__c;
-                    contactsToUpdate.add(contact);
-                }
-            }
+        if(!contactsToUpdate.isEmpty()){
+        update contactsToUpdate;   
         }
-        update contactsToUpdate;
     }
+
     private static Set<Id> getContactIdFromCar(Map<id, Car__c> newCars){
         Set<id> contactIds = new Set<id>();
         for(Car__c car: newCars.values()) {
