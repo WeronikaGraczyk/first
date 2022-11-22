@@ -1,19 +1,17 @@
 public with sharing class CheckGenederContact {
-    public static void checkGender(List<Contact> contact){
-        List<Contact> retur = new List<Contact>();
-        for(Contact c:contact){
-            c.Gender__c=whichGender(c.FirstName);
-            retur.add(c);
+    public static void checkGender(List<Contact> contacts){
+        List<Contact> contactsToCheckGender = new List<Contact>();
+        for(Contact contact : contacts){
+            contact.Gender__c = whichGender(contact.FirstName);
+            contactsToCheckGender.add(contact);
         } 
     }
-    private static String whichGender(String firstname){
-        String a = firstname.right(2);
-        if( a.equals('na') || a.equals('ta') || a.equals('ia') || a.equals('wa') ||
-            a.equals('ja') || a.equals('la') || a.equals('da') || a.equals('ła') ||
-            a.equals('ra') || a.equals('ża') || a.equals('sa') || a.equals('ga') || 
-            a.equals('za') || a.equals('ka')){
+    public static String whichGender(String firstname){
+        String endName = firstname.right(2);
+        Set<String> endNameTemplates = new Set<String>{'na','ta','ia','wa','ja','la','da','ła','ra','ża','sa','ga','za','ka'};
+        if(endNameTemplates.contains(endName) ){
                 return 'Female';
-            }
+        }
         return 'Male';
     }
 }

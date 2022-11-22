@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CarView</fullName>
+    <columns>NAME</columns>
+    <columns>CREATED_DATE</columns>
+    <columns>date_of_inspection__c</columns>
+    <columns>Fuel__c</columns>
+    <columns>Mileage__c</columns>
+    <filterScope>Mine</filterScope>
+    <label>CarView</label>
+</ListView>

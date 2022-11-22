@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CompactLayout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>allInfo</fullName>
+    <fields>Capacity__c</fields>
+    <fields>Name</fields>
+    <fields>Contacts__c</fields>
+    <fields>date_of_inspection__c</fields>
+    <fields>Mileage__c</fields>
+    <fields>Purchase_price__c</fields>
+    <fields>Value__c</fields>
+    <fields>year_of_production__c</fields>
+    <fields>engine_power__c</fields>
+    <label>allInfo</label>
+</CompactLayout>
