@@ -1,6 +1,7 @@
 <template>
 	<lightning-card title="Cars" icon-name="utility:key">
 		<div class="slds-card__body slds-card__body_inner">
+			<lightning-record-view-form record-id={recordId} object-api-name="Account">
 			<template if:true={cars}>
 				<lightning-layout multiple-rows="true" pull-to-boundary="small">
 					<template for:each={cars} for:item="car">
@@ -26,6 +27,7 @@
 					An error occurred while loading the cars list
 				</div>
 			</template>
+			</lightning-record-view-form>
 		</div>
 	</lightning-card>
 </template>

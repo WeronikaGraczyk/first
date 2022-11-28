@@ -1,14 +1,15 @@
-import { LightningElement, wire } from 'lwc';
+import { LightningElement, wire, api, track } from 'lwc';
 import getAllCars from '@salesforce/apex/CarController.getAllCars';
 export default class carList extends LightningElement {
-    @wire(getAllCars)
-    error;
-    cars;
+	@api recordId;
+ 	@track cars;
+    @track error;
+    
 	connectedCallback() {
 		this.loadCars();
 	}
 	loadCars() {
-		getAllCars()
+		getAllCars({AccountId : this.recordId})
 			.then(result => {
 				this.cars = result;
 			})
