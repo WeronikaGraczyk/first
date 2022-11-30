@@ -1,17 +1,24 @@
-import { LightningElement, wire, api, track } from 'lwc';
-import getAllCars from '@salesforce/apex/CarController.getAllCars';
+import { LightningElement, api, track } from 'lwc';
+import fetchWrapperData from '@salesforce/apex/Wrapper.fetchWrapperData';
 export default class carList extends LightningElement {
+	@track COLUMNS = [
+    { label: 'Name', fieldName: 'Car_name' },
+    { label: 'Fuel', fieldName: 'Car_Fuel'},
+	{ label: 'Contact Name', fieldName: 'Contact_Name' }
+	];
+
 	@api recordId;
- 	@track cars;
     @track error;
-    
-	connectedCallback() {
-		this.loadCars();
+    @track data;
+
+	async connectedCallback() {
+		await this.loadCars();
 	}
-	loadCars() {
-		getAllCars({AccountId : this.recordId})
+
+	async loadCars() {
+		fetchWrapperData({AccountId : this.recordId})
 			.then(result => {
-				this.cars = result;
+				this.data = result;
 			})
 			.catch(error => {
 				this.error = error;
