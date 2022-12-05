@@ -5,6 +5,6 @@ export default class CarButton extends LightningElement {
     @track error;
     @track response;
     async handleClick() {
-        connectWithApi({carId : this.recordId})
+        connectWithApi({recordId : this.recordId})
     }
 }

@@ -1,16 +1,22 @@
 public with sharing class CarController {
+    @AuraEnabled//(cacheable = true)
+    public static void connectWithApi(String recordId){
+        Car__c car = [SELECT TextArea__c FROM Car__c WHERE id =: recordId];
 
-    @AuraEnabled(cacheable=true)
-    public static List<Car__c> getAllCars(String AccountId){
-        Account AccountIds = [SELECT id FROM Account WHERE id =: AccountId];
+        Http http = new Http();
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('https://myfakeapi.com/api/cars/1');
+        request.setHeader('Content-Type','application/json');
+        request.setMethod('GET');
 
-        List<Contact> contactList = [SELECT id FROM Contact WHERE AccountId =: AccountIds.id];
+        HttpResponse response = http.send(request);
 
-        Set<id> contactsIds = new Set<id>();
-        for(Contact contact : contactList){
-            contactsIds.add(contact.id);
-        }
-
-        return [SELECT Name__c, Fuel__c, Value__c FROM Car__c WHERE Contacts__c IN :contactsIds];
+        if(response.getStatusCode() == 200){
+            String respondeText = response.getBody();
+            car.TextArea__c = respondeText;
+        }else{
+            System.debug('Error');
+        } 
+        update car;
     }
 }
