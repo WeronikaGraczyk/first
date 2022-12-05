@@ -16,7 +16,7 @@ export default class carList extends LightningElement {
 	}
 
 	async loadCars() {
-		fetchWrapperData({AccountId : this.recordId})
+		fetchWrapperData({recordId : this.recordId})
 			.then(result => {
 				this.data = result;
 			})
