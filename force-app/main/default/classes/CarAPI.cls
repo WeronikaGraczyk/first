@@ -9,16 +9,16 @@ Global class CarAPI {
         RestResponse response = new RestResponse();
         List<Car__c> carList;
 
-        if(carId.length() == 0){
-            RestContext.response.statusCode = 404;
-        }else{
-            try{
+        try{
+            if(carId.length() == 0){
+                RestContext.response.statusCode = 404;
+            }else{
                 carList = [SELECT Id, Name__c, Fuel__c, Value__c FROM Car__c WHERE id =:carId];
-            RestContext.response.responseBody = Blob.valueof(JSON.serialize(carList));
-            }catch(Exception e){
+                RestContext.response.responseBody = Blob.valueof(JSON.serialize(carList));
+            }
+        }catch(Exception e){
                 System.debug(' Exception '+ e.getMessage());
             }
-        }
         return carList;
     }
 }

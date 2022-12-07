@@ -1,8 +1,8 @@
 public with sharing class CarController {
     @AuraEnabled//(cacheable = true)
     public static void connectWithApi(String recordId){
-        Car__c car = [SELECT TextArea__c FROM Car__c WHERE id =: recordId];
-
+    
+        Car__c car = new Car__c(Id= recordId);
         Http http = new Http();
         HttpRequest request = new HttpRequest();
         request.setEndpoint('https://myfakeapi.com/api/cars/1');
