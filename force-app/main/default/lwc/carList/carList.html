@@ -1,0 +1,15 @@
+<template>
+		<div class="slds-card__body slds-card__body_inner">
+			<lightning-record-view-form record-id = {recordId} object-api-name = "Account">
+					<div style = "height: 500px;">
+					<template if:true = {data}>
+						 <lightning-datatable
+								 key-field = "id"
+								 data = {data}
+								 columns = {COLUMNS}>
+						 </lightning-datatable>
+					</template>
+					</div>
+			</lightning-record-view-form>
+		</div>
+</template>
